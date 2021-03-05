@@ -1,14 +1,14 @@
 //++++++++++ Defining Pinouts ++++++++++
+
 #define PIN_SENSOR A1
 
-//++++++++++ Define PinMode ++++++++++
-#define pinMode(PIN_READ, INPUT);
-
 //++++++++++ Define Array Varibles ++++++++++
+
 const int ArrElements = 20;               
 int Readings[ArrElements]; 
 
 //++++++++++ Define Distance Class ++++++++++
+
 class DistanceSensor {
   private:                                                                    // Defining Private Varibles
     unsigned long nextChangeTime = 0;
@@ -20,16 +20,18 @@ class DistanceSensor {
     int SensorAverage = 0;
     int Total = 0;   
     int ReadingIndex = 0;
+    unsigned long currentTime;
     
   public:                                                                     // Passing data into private varibles
      DistanceSensor(int Value, unsigned long OnTime) {
         this->Value = Value;
         this->OnTime = OnTime;
+        
+        pinMode(Value, INPUT);
     }
     
     void Check() {                                                           // Checks Value from sensor
-      unsigned long currentTime = millis();
-      
+      currentTime = millis();
       if(currentTime >= nextChangeTime){                                      
         Voltage = SensorAverage * (5.0 / 1023.0);                             
         Distance = -21.75*(Voltage) + 58.021;                                 
@@ -53,6 +55,7 @@ class DistanceSensor {
     }
 
     void Print() {                                                            //Prints Data aquired from sensor at equal intervals
+      
        Serial.print("Distance (y=mx+c): ");                               
        Serial.print(Distance);
        Serial.print("     ");
@@ -61,8 +64,15 @@ class DistanceSensor {
        Serial.println(" ");                                                
     }
 
-    int GetValue(){                                                           // Read Analog Input 
-      int Value = analogRead(PIN_SENSOR);                                                  
-      return Value;
+    int GetValue(){                                                           // Read Analog Input                                                 
+      return analogRead(PIN_SENSOR);
+    }
+
+   // int getSensorAvg(){
+   //   return SensorAverage;
+   // }
+
+    float getPolyDistance(){
+      return DistancePoly;
     }
 };
