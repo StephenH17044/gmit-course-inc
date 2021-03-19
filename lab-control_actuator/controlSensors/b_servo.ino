@@ -73,8 +73,7 @@ class ServoActuator{
       if(ServoOn){                                        //If CurrentTime is less than NextTimeChange                               
         if (Angle>=0.00 && Angle<=180.00){                //If the angle is between 0 and 180 degrees
           RunServo.attach(PIN_SERVO,470,2235);            //Sets soft limits on Servo Motor
-          RunServo.write(Angle);                          //Motor Output to specified angle
-          //delay (10);           
+          RunServo.write(Angle);                          //Motor Output to specified angle         
         }
       }               
     }

@@ -5,7 +5,7 @@
 Blinker BlinkLED0 = Blinker(PIN_LED0, 500, 500);              // CLASS BLINKER(LED NAME, LED ON TIME, LED OFF TIME)
 Blinker BlinkLED1 = Blinker(PIN_LED1, 500, 500);              // CLASS BLINKER(LED NAME, LED ON TIME, LED OFF TIME)
 DistanceSensor DS = DistanceSensor(PIN_SENSOR,20);            // CLASS DEPTHSENSOR(SENSOR NAME, CALCULATE DISTANCE INTERVALS)
-ServoActuator SA = ServoActuator (PIN_SERVO, 20, 10, 20);     // CLASS SERVO(SERVO NAME, SERVO OUTPUT INTERVALS, LOWER DIS = ANGLE 0, UPPER DIS = ANGLE 180)
+ServoActuator SA = ServoActuator (PIN_SERVO, 50, 10, 20);     // CLASS SERVO(SERVO NAME, SERVO OUTPUT INTERVALS, LOWER DIS = ANGLE 0, UPPER DIS = ANGLE 180)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Program Setup///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////         
@@ -25,6 +25,7 @@ void loop() {
   BlinkLED1.check();                                          //Blink LED 2 ON/OFF
   DS.SmoothInput();                                           //Read and Smooth Input
   DS.CalcDistance();                                          //Calculate the Distance based on Averaged Input
+  DS.Print();                                                 //Print Distance to terminal Window
   SA.setAngle(DS.getPolyDistance());                          //Convert distance to angular rotation
   SA.ActuateServo();                                          //Physical output to servo
 }
