@@ -2,12 +2,12 @@
 #define PinB 3
 #define PinC 4
 #define PinD 5
+#define Button 8
 #define NUMBER_OF_STEPS_PER_REV 512
 int i=0;
 
-void setup() {
-  //pinMode(ForwardButton,INPUT); 
-  //pinMode(ReverseButton,INPUT); 
+void setup() { 
+  pinMode (Button,INPUT); 
   pinMode (PinA,OUTPUT);
   pinMode (PinB,OUTPUT);
   pinMode (PinC,OUTPUT);
@@ -71,10 +71,14 @@ void stepBackward(int delayValue){
 }
 
 void loop() {
-  for(int i=0;i<512;i++){
-    stepForward(5);
+  bool buttonSignal=digitalRead(Button);
+  int rawValue=analogRead(A0);
+  int delayValue = map(rawValue,0,1023,5,100);
+  
+  if (buttonSignal==HIGH){
+    stepForward(delayValue);
   }
-  for(int i=0;i<512;i++){
-    stepBackward(5);
+  else{
+    stepBackward(delayValue);
   }
 }
